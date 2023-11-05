@@ -4,6 +4,7 @@ namespace App\Livewire\Student;
 
 use App\Models\Classes;
 use App\Models\Section;
+use App\Models\Student;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 
@@ -19,11 +20,15 @@ class Edit extends Component
         ]);
     }
 
+    public $name;
+    public $email;
     // Thanks
-    public function mount()
+    public function mount(Student $student)
     {
+        $this->student = $student;
+
         $this->fill(
-            $this->student->only('name', 'email', 'section_id', 'class_id')
+            $this->student->only('name', 'email'),
         );
     }
 }
