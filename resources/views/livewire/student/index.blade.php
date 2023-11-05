@@ -59,7 +59,7 @@
                                         class="text-indigo-600 hover:text-indigo-900">
                                         Edit
                                     </a>
-                                    <button wire:click="delete({{ $student->id }})"
+                                    <button wire:confirm="Are you sure?" wire:click="delete({{ $student->id }})"
                                         class="ml-2 text-indigo-600 hover:text-indigo-900">
                                         Delete
                                     </button>
@@ -79,3 +79,29 @@
 
     </div>
 </div>
+
+<script>
+    Livewire.directive('confirm', ({
+        el,
+        directive,
+        component,
+        cleanup
+    }) => {
+        let content = directive.expression
+
+        let onClick = e => {
+            if (!confirm(content)) {
+                e.preventDefault()
+                e.stopImmediatePropagation()
+            }
+        }
+
+        el.addEventListener('click', onClick, {
+            capture: true
+        })
+
+        cleanup(() => {
+            el.removeEventListener('click', onClick)
+        })
+    })
+</script>

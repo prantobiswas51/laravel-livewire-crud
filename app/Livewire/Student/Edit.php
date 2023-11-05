@@ -22,6 +22,8 @@ class Edit extends Component
 
     public $name;
     public $email;
+
+    public ?Student $student;
     // Thanks
     public function mount(Student $student)
     {
@@ -30,5 +32,14 @@ class Edit extends Component
         $this->fill(
             $this->student->only('name', 'email'),
         );
+    }
+
+    public function update(Student $student)
+    {
+        $this->student->update(
+            $this->all()
+        );
+
+        return redirect()->route('students.index')->with('status', 'Update Successfully');
     }
 }
